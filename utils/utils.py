@@ -1,14 +1,13 @@
+from src.json_saver import JSONSaver
+from src.table_creator import TableCreator
+
+
 from os.path import join
 from time import sleep
-
 
 from tqdm import tqdm
 from art import tprint
 from prettytable import PrettyTable
-
-from src.head_hunter_api import HeadHunterAPI
-from src.json_saver import JSONSaver
-from src.table_creator import TableCreator
 
 
 def print_intro() -> None:
@@ -52,9 +51,20 @@ def print_vacancy_table(table: PrettyTable) -> None:
           '[*n] - Добавить вакансию в избранное \t[3] - Главное меню')
 
 
+def print_featured_vacancy(table: PrettyTable) -> None:
+    """
+    Функция принимает таблицу с вакансиями и печатает ее
+    :param table: Инициализированный таблицей объект PrettyTable
+    """
+    print(table)
+    print('[1] - Предыдущая вакансия \t\t\t\t[2] - Следующая страница \n'
+          '[3] - Удалить вакансию из избранного \t[4] - Главное меню')
+
+
 def get_action_number(total_numbers: int) -> int or str:
     """
-    Функция запрашивает ввод пользователя для выбора действия в меню, число от 1 до total_numbers или [*n] n - от 1 до 8
+    Функция запрашивает ввод пользователя для выбора действия в меню, число от 1 до total_numbers
+    или [*n] n - число от 1 до 8.
     :param total_numbers: Инициализированный таблицей объект PrettyTable
     :return: int, Число о 1 до total_numbers, которое ввел пользователь.
     """
@@ -81,7 +91,11 @@ def get_action_number(total_numbers: int) -> int or str:
             print(f'Выберите другое действие!!!')
 
 
-def vacancy_scroller(api_obj):
+def vacancy_scroller(api_obj) -> None:
+    """
+    Функция для просмотра вакансий в консоли с hh.ru либо с SuperJob.ru
+    :param api_obj: Экземпляр класса HeadHunterAPI или SuperJobAPI
+    """
 
     # Создал экземпляр для АПИ hh.ru
 
@@ -93,8 +107,11 @@ def vacancy_scroller(api_obj):
 
         hh_vacancies = api_obj.basic_info_about_vacancies
         vacancies_table = TableCreator.vacancies(hh_vacancies)
+
+        print('\n\n\n')
         print(f'Номер страницы: {api_obj.page}')
         print_vacancy_table(vacancies_table)
+        print()
 
         # Ввод пользователя с выбором действия
         vacancy_action = get_action_number(3)
@@ -119,3 +136,39 @@ def vacancy_scroller(api_obj):
 
                 if vacancy['number'] == vacancy_number:
                     JSONSaver.save_to_file(path_to_file, vacancy)
+
+
+def featured_scroller(featured_vacancies: list) -> None:
+    """
+    Функция для просмотра вакансий из избранного.
+    :param featured_vacancies: List, Список словарей, с данными о вакансии.
+    """
+
+    path_to_file = join('..', 'data', 'featured_vacancies.json')
+
+    max_page = len(featured_vacancies)
+    index = 0
+    while True:
+        print('\n\n\n')
+        print(f'Вакансия номер: {index + 1}')
+        vacancy_table = TableCreator.featured_vacancies(featured_vacancies[index])
+        print_featured_vacancy(vacancy_table)
+        print()
+        vacancy_action = get_action_number(4)
+
+        if vacancy_action == 1:
+            if index > 0:
+                index -= 1
+
+        elif vacancy_action == 2:
+            if index <= max_page - 2:
+                index += 1
+
+        elif vacancy_action == 3:
+            try:
+                JSONSaver.remove_from_file(path_to_file, index)
+            except FileNotFoundError:
+                print('Вы еще не добавили в избранное ни одной вакансии!!!')
+
+        elif vacancy_action == 4:
+            break
