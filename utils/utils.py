@@ -1,9 +1,14 @@
+from os.path import join
 from time import sleep
 
 
 from tqdm import tqdm
 from art import tprint
-from prettytable import PrettyTable, ALL, MSWORD_FRIENDLY, SINGLE_BORDER
+from prettytable import PrettyTable
+
+from src.head_hunter_api import HeadHunterAPI
+from src.json_saver import JSONSaver
+from src.table_creator import TableCreator
 
 
 def print_intro() -> None:
@@ -26,35 +31,10 @@ def print_intro() -> None:
         pbar.set_description()
 
 
-def create_main_menu_table() -> PrettyTable:
-    """
-    Функция создает и возвращает объект таблицы главного меню
-
-    :return: Инициализированный таблицей объект PrettyTable
-    """
-
-    table = PrettyTable(hrules=ALL)
-    table.field_names = ['Номер дейсвия', 'Описание']
-
-    table.add_rows([
-        ['[1]', 'Смотреть вакансии на hh.ru'],
-        ['[2]', 'Смотреть вакансии на SuperJob.ru'],
-        ['[3]', 'Смотреть вакансии в избранном'],
-        ['[4]', 'Очистить избранное'],
-        ['[5]', 'Выйти из программы']
-    ])
-
-    table.set_style(MSWORD_FRIENDLY)
-
-    return table
-
-
 def print_main_menu_table(table: PrettyTable) -> None:
     """
     Функция принимает таблицу главного меню и печатает ее
-
     :param table: Инициализированный таблицей объект PrettyTable
-    :return action_number:  int, Номер действия в меню
     """
 
     print('\t' * 4 + '   Главное меню')
@@ -62,60 +42,80 @@ def print_main_menu_table(table: PrettyTable) -> None:
     print()
 
 
-def create_vacancies_table(vacancies: dict) -> PrettyTable:
+def print_vacancy_table(table: PrettyTable) -> None:
+    """
+    Функция принимает таблицу с вакансиями и печатает ее
+    :param table: Инициализированный таблицей объект PrettyTable
+    """
+    print(table)
+    print('[1] - Предыдущая страница \t\t\t\t[2] - Следующая страница \n'
+          '[*n] - Добавить вакансию в избранное \t[3] - Главное меню')
 
-    table = PrettyTable(hrules=ALL)
 
-    table.field_names = ['Номер', 'Название вакансии', 'город', 'опыт работы', 'зарплата']
+def get_action_number(total_numbers: int) -> int or str:
+    """
+    Функция запрашивает ввод пользователя для выбора действия в меню, число от 1 до total_numbers или [*n] n - от 1 до 8
+    :param total_numbers: Инициализированный таблицей объект PrettyTable
+    :return: int, Число о 1 до total_numbers, которое ввел пользователь.
+    """
 
-    for vacancy in vacancies:
+    while True:
 
-        number = vacancy['number']
-        name = vacancy['name']
-        city = vacancy['city']
-        experience = vacancy['experience']
-        salary_from = vacancy['salary_from']
-        salary_to = vacancy['salary_to']
+        action_num = input('Выберите номер действия: ')
+        print()
 
-        if not salary_from and not salary_to:
-            salary = 'Зарплата не указана'
-        elif not salary_from and salary_to:
-            salary = f'Зарплата до {salary_to}'
-        elif salary_from and not salary_to:
-            salary = f'Зарплата от {salary_from}'
+        if action_num.isdigit():
+            if 0 < int(action_num) <= total_numbers:
+                action_num = int(action_num)
+                return action_num
+            else:
+                print(f'Выберите другое действие!!!')
+
+        elif action_num.startswith('*') \
+                and len(action_num) == 2 \
+                and action_num[1].isdigit() \
+                and int(action_num[1]) in range(1, 9):
+            return action_num
 
         else:
-            salary = f'Зарплата от {salary_from} до {salary_to}'
-
-        table.add_row([number, name, city, experience, salary])
-
-    table.set_style(SINGLE_BORDER)
-
-    return table
+            print(f'Выберите другое действие!!!')
 
 
-def print_vacancy_table(table: PrettyTable) -> None:
+def vacancy_scroller(api_obj):
 
-    print(table)
+    # Создал экземпляр для АПИ hh.ru
 
+    path_to_file = join('..', 'data', 'featured_vacancies.json')
 
-def get_action_number(total_numbers: int) -> int:
-    """
-    Функция запрашивает ввод пользователя для выбора действия в меню, число от 1 до total_numbers.
-    :param total_numbers: Инициализированный таблицей объект PrettyTable
-    :return: int, Число о 1 до total_numbers
-    """
-    try:
-        action_number = int(input('Выберите номер действия: '))
+    while True:
 
-        if not 0 < action_number <= total_numbers:
-            print()
-            print(f'Нет такого действия!!! Выберите другое, от 1 до {total_numbers}!')
-            get_action_number(total_numbers)
+        # Получил данные по вакансиям с hh.ru и записал их в таблицу и напечатал
 
-        return action_number
+        hh_vacancies = api_obj.basic_info_about_vacancies
+        vacancies_table = TableCreator.vacancies(hh_vacancies)
+        print(f'Номер страницы: {api_obj.page}')
+        print_vacancy_table(vacancies_table)
 
-    except ValueError:
-        print()
-        print(f'Нет такого действия!!! Выберите другое, от 1 до {total_numbers}!')
-        get_action_number(total_numbers)
+        # Ввод пользователя с выбором действия
+        vacancy_action = get_action_number(3)
+
+        # Блок с вариантами действий в зависимости от выбора пользователя.
+        if vacancy_action == 1 and api_obj.page > 1:
+            api_obj.page -= 1
+
+        elif vacancy_action == 2:
+            api_obj.page += 1
+
+        elif vacancy_action == 3:
+            break
+
+        elif vacancy_action in ['*1', '*2', '*3', '*4', '*5', '*6', '*7', '*8']:
+
+            # Записали номер вакансии.
+            vacancy_number = int(vacancy_action[1])
+
+            # Тут по номеру вакансии ищем ее на странице, если номер совпадает, записываем ее в JSON.
+            for vacancy in hh_vacancies:
+
+                if vacancy['number'] == vacancy_number:
+                    JSONSaver.save_to_file(path_to_file, vacancy)

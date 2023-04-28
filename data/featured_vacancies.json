@@ -1,0 +1,18 @@
+[
+    {
+        "name": "Офис-менеджер",
+        "city": "Алматы",
+        "experience": "От 1 года до 3 лет",
+        "salary_from": 170000,
+        "salary_to": 180000,
+        "url": "https://hh.ru/vacancy/79097225"
+    },
+    {
+        "name": "HR менеджер",
+        "city": "Алматы",
+        "experience": "От 1 года до 3 лет",
+        "salary_from": 300000,
+        "salary_to": 500000,
+        "url": "https://hh.ru/vacancy/79028811"
+    }
+]

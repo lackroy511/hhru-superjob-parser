@@ -15,10 +15,11 @@ class HeadHunterAPI(BaseClassForAPI):
         self.keywords = ''
         self.page = 1
 
+    @property
     def get_vacancies(self) -> dict:
         """
-        Функция получает дынные о вакансиях
-        :return: Словарь с данными о вакансиях
+        Функция получает дынные о вакансиях через GET запрос.
+        :return: Словарь с данными о вакансиях.
         """
         params = {
             'page': self.page,
@@ -34,9 +35,13 @@ class HeadHunterAPI(BaseClassForAPI):
 
     @property
     def basic_info_about_vacancies(self):
-
+        """
+        Функция работает с данными вакансий, достает только ключевую информацию и возвращает список словарей
+        с основными данными вакансий.
+        :return: List, список словарей с вакансиями.
+        """
         list_of_vacancies = []
-        data = self.get_vacancies()
+        data = self.get_vacancies
         number = 1
         for vacancy in data['items']:
             try:
@@ -50,7 +55,7 @@ class HeadHunterAPI(BaseClassForAPI):
                     'url': vacancy['alternate_url']
                 })
                 number += 1
-            except KeyError:
+            except (TypeError, KeyError):
                 list_of_vacancies.append({
                     'number': number,
                     'name': vacancy['name'],

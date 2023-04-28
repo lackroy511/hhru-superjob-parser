@@ -13,10 +13,11 @@ class SuperJobAPI(BaseClassForAPI):
         self.page = 1
         self.keywords = ''
 
+    @property
     def get_vacancies(self) -> dict:
         """
-        Функция получает дынные о вакансиях
-        :return: Словарь с данными о вакансиях
+        Функция получает дынные о вакансиях через GET запрос.
+        :return: Словарь с данными о вакансиях.
         """
         params = {
             'page': self.page,
@@ -30,21 +31,36 @@ class SuperJobAPI(BaseClassForAPI):
         return data
 
     @property
-    def basic_info_about_vacancies(self):
-
+    def basic_info_about_vacancies(self) -> list:
+        """
+        Функция работает с данными вакансий, достает только ключевую информацию и возвращает список словарей
+        с основными данными вакансий.
+        :return: List, список словарей с вакансиями.
+        """
         list_of_vacancies = []
-        data = self.get_vacancies()
+        data = self.get_vacancies
         number = 1
         for vacancy in data['objects']:
-            list_of_vacancies.append({
-                'number': number,
-                'name': vacancy['profession'],
-                'city': vacancy['client']['town']['title'],
-                'experience': vacancy['experience']['title'],
-                'salary_from': vacancy['payment_from'],
-                'salary_to': vacancy['payment_to'],
-                'url': vacancy['link']
-            })
-            number += 1
-
+            try:
+                list_of_vacancies.append({
+                    'number': number,
+                    'name': vacancy['profession'],
+                    'city': vacancy['client']['town']['title'],
+                    'experience': vacancy['experience']['title'],
+                    'salary_from': vacancy['payment_from'],
+                    'salary_to': vacancy['payment_to'],
+                    'url': vacancy['link']
+                })
+                number += 1
+            except KeyError:
+                list_of_vacancies.append({
+                    'number': number,
+                    'name': vacancy['profession'],
+                    'city': 'Адрес не указан',
+                    'experience': vacancy['experience']['title'],
+                    'salary_from': vacancy['payment_from'],
+                    'salary_to': vacancy['payment_to'],
+                    'url': vacancy['link']
+                })
+                number += 1
         return list_of_vacancies
