@@ -1,0 +1,50 @@
+[
+    {
+        "name": "Python разработчик",
+        "city": "Москва",
+        "experience": "От 1 года до 3 лет",
+        "salary_from": null,
+        "salary_to": null,
+        "url": "https://hh.ru/vacancy/79510502"
+    },
+    {
+        "name": "Middle Python developer (Казань)",
+        "city": "Казань",
+        "experience": "От 1 года до 3 лет",
+        "salary_from": 150000,
+        "salary_to": 250000,
+        "url": "https://hh.ru/vacancy/79828667"
+    },
+    {
+        "name": "Python разработчик (junior +)",
+        "city": "Красноярск",
+        "experience": "От 1 года до 3 лет",
+        "salary_from": null,
+        "salary_to": null,
+        "url": "https://hh.ru/vacancy/79865945"
+    },
+    {
+        "name": "Middle Python developer (Сочи)",
+        "city": "Сочи",
+        "experience": "От 1 года до 3 лет",
+        "salary_from": 150000,
+        "salary_to": 250000,
+        "url": "https://hh.ru/vacancy/79835988"
+    },
+    {
+        "name": "Python Backend Разработчик",
+        "city": "Минск",
+        "experience": "От 3 до 6 лет",
+        "salary_from": null,
+        "salary_to": null,
+        "url": "https://hh.ru/vacancy/79268875"
+    },
+    {
+        "name": "Разработчик Python",
+        "city": "Москва",
+        "experience": "От 1 года до 3 лет",
+        "salary_from": null,
+        "salary_to": null,
+        "url": "https://hh.ru/vacancy/79879806"
+    }
+]

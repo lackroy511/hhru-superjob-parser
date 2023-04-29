@@ -59,13 +59,13 @@ class Vacancy:
                f"url: {self.url}"
 
     def __repr__(self):
-        return f"{self.__class__.__name__}('{self.name}', " \
-                                         f"'{self.city}', " \
-                                         f"'{self.experience}', " \
-                                         f"'{self.salary_from}', " \
-                                         f"'{self.salary_to}', " \
-                                         f"'{self.salary}', " \
-                                         f"'{self.url}')"
+        return f"{self.__class__.__name__}(f'{self.name}', " \
+                                          f"'{self.city}', " \
+                                          f"'{self.experience}', " \
+                                          f"'{self.salary_from}', " \
+                                          f"'{self.salary_to}', " \
+                                          f"'{self.salary}', " \
+                                          f"'{self.url}')"
 
     def __gt__(self, other) -> bool:
         if isinstance(other, Vacancy):
