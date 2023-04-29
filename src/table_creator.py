@@ -78,6 +78,7 @@ class TableCreator:
         experience = vacancy['experience']
         salary_from = vacancy['salary_from']
         salary_to = vacancy['salary_to']
+        url = vacancy['url']
 
         if not salary_from and not salary_to:
             salary = 'Зарплата не указана'
@@ -91,6 +92,6 @@ class TableCreator:
 
         table.add_row([name, city, experience, salary])
         table.set_style(SINGLE_BORDER)
-        table.add_row(['URL', vacancy['url'], '', ''])
+        table.add_row(['URL', url, '', ''])
 
         return table
