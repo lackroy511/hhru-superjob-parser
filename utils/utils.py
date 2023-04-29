@@ -145,6 +145,7 @@ def vacancy_scroller(api_obj) -> None:
 def featured_scroller(featured_vacancies: list) -> None:
     """
     Функция для просмотра вакансий из избранного.
+    Так как она принимает список, логика перелистывания страниц завязана на индексе списка.
     :param featured_vacancies: List, Список словарей, с данными о вакансии.
     """
 
@@ -152,6 +153,7 @@ def featured_scroller(featured_vacancies: list) -> None:
 
     max_page = len(featured_vacancies)
     index = 0
+
     while True:
         print('\n\n\n')
         print(f'Вакансия номер: {index + 1}')

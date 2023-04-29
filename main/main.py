@@ -31,49 +31,32 @@ def main():
 
         # Тут блок if/elif из пяти действий в зависимости от выбора пользователя.
         if action_in_menu == 1:
-
-            # Задали ключевое слово для поиска вакансий
             hh_ru_api.keywords = input("\nДля поиска вакансий по ключевому слову, введите слово, например 'Python'\n"
                                        "Для поиска всех вакансий нажмите 'Enter'\n\nВвод: ")
-
-            # Крутим вакансии с hh.ru
             vacancy_scroller(hh_ru_api)
-
-            # Вернули дефолтное значение
             hh_ru_api.keywords = ''
 
         elif action_in_menu == 2:
-
-            # Задали ключевое слово для поиска вакансий
             super_job_api.keywords = input(
                                         "\nДля поиска вакансий по ключевому слову, введите слово, например 'Python'\n"
                                         "Для поиска всех вакансий нажмите 'Enter'\n\nВвод: "
                                         )
-
-            # Крутим вакансии с hh.ru
             vacancy_scroller(super_job_api)
-
-            # Вернули дефолтное значение
             super_job_api.keywords = ''
 
         elif action_in_menu == 3:
             try:
-                # Получили данные из файла
-                featured_vacancies = JSONSaver.get_from_file(PATH_TO_FILE)
 
-                # Крутим избранные вакансии
+                featured_vacancies = JSONSaver.get_from_file(PATH_TO_FILE)
                 featured_scroller(featured_vacancies)
 
             except JSONDecodeError:
                 print('Вы еще не добавили в избранное ни одной вакансии!!!')
 
         elif action_in_menu == 4:
-
-            # Очистить файл с избранными вакансиями
             JSONSaver.clear_file(PATH_TO_FILE)
 
         elif action_in_menu == 5:
-
             # Прервать цикл и выйти из программы
             break
 
