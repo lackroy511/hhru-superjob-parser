@@ -31,12 +31,30 @@ def main():
 
         # Тут блок if/elif из пяти действий в зависимости от выбора пользователя.
         if action_in_menu == 1:
+
+            # Задали ключевое слово для поиска вакансий
+            hh_ru_api.keywords = input("\nДля поиска вакансий по ключевому слову, введите слово, например 'Python'\n"
+                                       "Для поиска всех вакансий нажмите 'Enter'\n\nВвод: ")
+
             # Крутим вакансии с hh.ru
             vacancy_scroller(hh_ru_api)
 
+            # Вернули дефолтное значение
+            hh_ru_api.keywords = ''
+
         elif action_in_menu == 2:
+
+            # Задали ключевое слово для поиска вакансий
+            super_job_api.keywords = input(
+                                        "\nДля поиска вакансий по ключевому слову, введите слово, например 'Python'\n"
+                                        "Для поиска всех вакансий нажмите 'Enter'\n\nВвод: "
+                                        )
+
             # Крутим вакансии с hh.ru
             vacancy_scroller(super_job_api)
+
+            # Вернули дефолтное значение
+            super_job_api.keywords = ''
 
         elif action_in_menu == 3:
             try:

@@ -97,18 +97,22 @@ def vacancy_scroller(api_obj) -> None:
     :param api_obj: Экземпляр класса HeadHunterAPI или SuperJobAPI
     """
 
-    # Создал экземпляр для АПИ hh.ru
-
     path_to_file = join('..', 'data', 'featured_vacancies.json')
 
     while True:
 
-        # Получил данные по вакансиям с hh.ru и записал их в таблицу и напечатал
+        # Получил данные по вакансиям с hh.ru или c SuperJob.ru и записал их в 'vacancies'.
+        vacancies = api_obj.basic_info_about_vacancies
 
-        hh_vacancies = api_obj.basic_info_about_vacancies
-        vacancies_table = TableCreator.vacancies(hh_vacancies)
-
+        # Создал таблицу с данными, передав данные 'vacancies' в создателя таблиц.
+        vacancies_table = TableCreator.vacancies(vacancies)
         print('\n\n\n')
+
+        # Печать таблицы, но перед этим проварка ее на пустоту, если пусто, цикл прерывается, выкидывает в обратно меню.
+        if not vacancies:
+            print('По вашему запросу ничего не найдено!!!')
+            break
+
         print(f'Номер страницы: {api_obj.page}')
         print_vacancy_table(vacancies_table)
         print()
@@ -132,7 +136,7 @@ def vacancy_scroller(api_obj) -> None:
             vacancy_number = int(vacancy_action[1])
 
             # Тут по номеру вакансии ищем ее на странице, если номер совпадает, записываем ее в JSON.
-            for vacancy in hh_vacancies:
+            for vacancy in vacancies:
 
                 if vacancy['number'] == vacancy_number:
                     JSONSaver.save_to_file(path_to_file, vacancy)
