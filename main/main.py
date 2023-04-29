@@ -31,12 +31,11 @@ def main():
 
         # Тут блок if/elif из пяти действий в зависимости от выбора пользователя.
         if action_in_menu == 1:
-            # Cкроллим вакансии с hh.ru
-
+            # Крутим вакансии с hh.ru
             vacancy_scroller(hh_ru_api)
 
         elif action_in_menu == 2:
-            # Cкроллим вакансии с hh.ru
+            # Крутим вакансии с hh.ru
             vacancy_scroller(super_job_api)
 
         elif action_in_menu == 3:
@@ -44,8 +43,9 @@ def main():
                 # Получили данные из файла
                 featured_vacancies = JSONSaver.get_from_file(PATH_TO_FILE)
 
-                # Скроллим избранные вакансии
+                # Крутим избранные вакансии
                 featured_scroller(featured_vacancies)
+
             except JSONDecodeError:
                 print('Вы еще не добавили в избранное ни одной вакансии!!!')
 
