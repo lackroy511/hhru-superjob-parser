@@ -12,8 +12,10 @@ class BaseJsonSaver(ABC):
     def get_from_file(self, path):
         pass
 
+    @abstractmethod
     def remove_from_file(self, path, index):
         pass
 
+    @abstractmethod
     def clear_file(self, path):
         pass
