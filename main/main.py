@@ -28,7 +28,7 @@ def main():
         print_main_menu_table(main_menu)
 
         # Прочитал ввод пользователя и запомнил его, это число от 1 до 5, соответствует пункту меню.
-        action_in_menu = get_action_number(5)
+        action_in_menu = get_action_number(6)
 
         # Тут блок if/elif из пяти действий в зависимости от выбора пользователя.
         if action_in_menu == 1:
