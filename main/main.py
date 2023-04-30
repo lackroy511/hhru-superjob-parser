@@ -1,4 +1,5 @@
 from utils.utils import print_intro, print_main_menu_table, get_action_number, vacancy_scroller, featured_scroller
+from utils.utils import get_top_five_vacancy
 from src.table_creator import TableCreator
 from src.head_hunter_api import HeadHunterAPI
 from src.super_job_api import SuperJobAPI
@@ -46,7 +47,6 @@ def main():
 
         elif action_in_menu == 3:
             try:
-
                 featured_vacancies = JSONSaver.get_from_file(PATH_TO_FILE)
                 featured_scroller(featured_vacancies)
 
@@ -54,9 +54,21 @@ def main():
                 print('Вы еще не добавили в избранное ни одной вакансии!!!')
 
         elif action_in_menu == 4:
-            JSONSaver.clear_file(PATH_TO_FILE)
+            try:
+                featured_vacancies = JSONSaver.get_from_file(PATH_TO_FILE)
+                top_featured_vacancies = get_top_five_vacancy(featured_vacancies)
+                top_table = TableCreator.top_five_table(top_featured_vacancies)
+                print(top_table)
+                print()
+                input("Что бы вернуться в главное меню, нажмите 'Enter': ")
+
+            except JSONDecodeError:
+                print('Вы еще не добавили в избранное ни одной вакансии!!!')
 
         elif action_in_menu == 5:
+            JSONSaver.clear_file(PATH_TO_FILE)
+
+        elif action_in_menu == 6:
             # Прервать цикл и выйти из программы
             break
 

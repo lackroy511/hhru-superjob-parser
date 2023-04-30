@@ -1,5 +1,6 @@
 from src.json_saver import JSONSaver
 from src.table_creator import TableCreator
+from src.vacancy import Vacancy
 
 
 from os.path import join
@@ -178,3 +179,29 @@ def featured_scroller(featured_vacancies: list) -> None:
 
         elif vacancy_action == 4:
             break
+
+
+def get_top_five_vacancy(featured_vacancies: list) -> list:
+    """
+    Принимает список словарей с данными о вакансиях, из этого списка инициализирует список экземпляров класса Vacancy.
+    :param featured_vacancies: List, Список словарей с данными о вакансиях.
+    :return: List, Список из пяти или меньше экземпляров класса Vacancy.
+    """
+
+    top_five_vacancy = list()
+    for vacancy in featured_vacancies:
+
+        top_five_vacancy.append(Vacancy(
+            vacancy["name"],
+            vacancy["city"],
+            vacancy["experience"],
+            vacancy["url"],
+            vacancy["salary_from"],
+            vacancy["salary_to"]
+        ))
+        if featured_vacancies.index(vacancy) == 4:
+            break
+
+    top_five_vacancy = sorted(top_five_vacancy, key=lambda x: x.salary, reverse=True)
+
+    return top_five_vacancy

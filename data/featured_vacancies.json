@@ -1,50 +1,26 @@
 [
     {
-        "name": "Python разработчик",
-        "city": "Москва",
-        "experience": "От 1 года до 3 лет",
-        "salary_from": null,
+        "name": "Личный водитель",
+        "city": "Ташкент",
+        "experience": "Более 6 лет",
+        "salary_from": 4000000,
         "salary_to": null,
-        "url": "https://hh.ru/vacancy/79510502"
+        "url": "https://hh.ru/vacancy/79905343"
     },
     {
-        "name": "Middle Python developer (Казань)",
-        "city": "Казань",
-        "experience": "От 1 года до 3 лет",
-        "salary_from": 150000,
-        "salary_to": 250000,
-        "url": "https://hh.ru/vacancy/79828667"
-    },
-    {
-        "name": "Python разработчик (junior +)",
-        "city": "Красноярск",
-        "experience": "От 1 года до 3 лет",
-        "salary_from": null,
-        "salary_to": null,
-        "url": "https://hh.ru/vacancy/79865945"
-    },
-    {
-        "name": "Middle Python developer (Сочи)",
-        "city": "Сочи",
-        "experience": "От 1 года до 3 лет",
-        "salary_from": 150000,
-        "salary_to": 250000,
-        "url": "https://hh.ru/vacancy/79835988"
-    },
-    {
-        "name": "Python Backend Разработчик",
+        "name": "Модель",
         "city": "Минск",
-        "experience": "От 3 до 6 лет",
-        "salary_from": null,
-        "salary_to": null,
-        "url": "https://hh.ru/vacancy/79268875"
+        "experience": "Нет опыта",
+        "salary_from": 30,
+        "salary_to": 30,
+        "url": "https://hh.ru/vacancy/79259206"
     },
     {
-        "name": "Разработчик Python",
+        "name": "Машинист установок обогащения и брикетирования",
         "city": "Москва",
-        "experience": "От 1 года до 3 лет",
-        "salary_from": null,
-        "salary_to": null,
-        "url": "https://hh.ru/vacancy/79879806"
+        "experience": "От 1 года",
+        "salary_from": 0,
+        "salary_to": 0,
+        "url": "https://achinsk.superjob.ru/vakansii/mashinist-ustanovok-obogascheniya-i-briketirovaniya-45978949.html"
     }
 ]

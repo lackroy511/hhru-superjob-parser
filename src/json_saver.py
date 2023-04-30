@@ -49,6 +49,7 @@ class JSONSaver(BaseJsonSaver):
             data = json.load(file)
             return data
 
+
     @classmethod
     def remove_from_file(cls, path: str, index: int) -> None:
         """
