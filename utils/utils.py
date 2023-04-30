@@ -37,7 +37,7 @@ def print_main_menu_table(table: PrettyTable) -> None:
     :param table: Инициализированный таблицей объект PrettyTable
     """
 
-    print('\t' * 4 + '   Главное меню')
+    print('\t' * 4 + '           Главное меню')
     print(table)
     print()
 
@@ -184,6 +184,7 @@ def featured_scroller(featured_vacancies: list) -> None:
 def get_top_five_vacancy(featured_vacancies: list) -> list:
     """
     Принимает список словарей с данными о вакансиях, из этого списка инициализирует список экземпляров класса Vacancy.
+    Отсортированных по зарплате в порядке убывания.
     :param featured_vacancies: List, Список словарей с данными о вакансиях.
     :return: List, Список из пяти или меньше экземпляров класса Vacancy.
     """
