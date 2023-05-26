@@ -9,7 +9,7 @@ from json import JSONDecodeError
 from os.path import join
 
 
-PATH_TO_FILE = join('', 'data', 'featured_vacancies.json')
+PATH_TO_FILE = join('data', 'featured_vacancies.json')
 
 
 def main():

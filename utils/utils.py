@@ -98,7 +98,7 @@ def vacancy_scroller(api_obj) -> None:
     :param api_obj: Экземпляр класса HeadHunterAPI или SuperJobAPI
     """
 
-    path_to_file = join('..', 'data', 'featured_vacancies.json')
+    path_to_file = join('data', 'featured_vacancies.json')
 
     while True:
 
