@@ -1,4 +1,5 @@
-from utils.utils import print_intro, print_main_menu_table, get_action_number, vacancy_scroller, featured_scroller
+from utils.utils import print_intro, print_main_menu_table, \
+    get_action_number, vacancy_scroller, featured_scroller
 from utils.utils import get_top_five_vacancy
 from src.table_creator import TableCreator
 from src.head_hunter_api import HeadHunterAPI
@@ -27,10 +28,12 @@ def main():
         main_menu = TableCreator.main_menu()
         print_main_menu_table(main_menu)
 
-        # Прочитал ввод пользователя и запомнил его, это число от 1 до 5, соответствует пункту меню.
+        # Прочитал ввод пользователя и запомнил его, это число от 1 до 5,
+        # соответствует пункту меню.
         action_in_menu = get_action_number(6)
 
-        # Тут блок if/elif из пяти действий в зависимости от выбора пользователя.
+        # Тут блок if/elif из пяти действий в зависимости 
+        # от выбора пользователя.
         if action_in_menu == 1:
             hh_ru_api.keywords = input("\nДля поиска вакансий по ключевому слову, введите слово, например 'Python'\n"
                                        "Для поиска всех вакансий нажмите 'Enter'\n\nВвод: ")
